@@ -140,13 +140,15 @@ class MoodAnalyzer:
         numerical_cols = ['energy_level', 'calm_level', 'mood_rating', 'sentiment_score']
         for col in numerical_cols:
             if col in data.columns:
-                features.append(data[col].values.reshape(-1, 1))
+                col_values = data[col].fillna(0).values
+                features.append(col_values.reshape(-1, 1))
         
         # Sentiment components
         sentiment_cols = ['pos', 'neu', 'neg']
         for col in sentiment_cols:
             if col in data.columns:
-                features.append(data[col].values.reshape(-1, 1))
+                col_values = data[col].fillna(0).values
+                features.append(col_values.reshape(-1, 1))
         
         # Time-based features
         if 'timestamp' in data.columns:
@@ -154,15 +156,16 @@ class MoodAnalyzer:
             data_copy['hour'] = data_copy['timestamp'].dt.hour
             data_copy['day_of_week'] = data_copy['timestamp'].dt.dayofweek
             features.extend([
-                data_copy['hour'].values.reshape(-1, 1),
-                data_copy['day_of_week'].values.reshape(-1, 1)
+                data_copy['hour'].fillna(12).values.reshape(-1, 1),
+                data_copy['day_of_week'].fillna(0).values.reshape(-1, 1)
             ])
         
         # Boolean features
         boolean_cols = ['work_stress', 'social_interaction', 'exercise']
         for col in boolean_cols:
             if col in data.columns:
-                features.append(data[col].astype(int).values.reshape(-1, 1))
+                col_values = data[col].fillna(False).astype(int).values
+                features.append(col_values.reshape(-1, 1))
         
         if not features:
             return np.array([]).reshape(0, 0)
@@ -186,7 +189,7 @@ class MoodAnalyzer:
                 n_samples = len(data)
                 n_clusters = min(n_clusters, max(2, n_samples // 3))
                 
-                clusterer = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
+                clusterer = KMeans(n_clusters=n_clusters, random_state=42, n_init='auto')
                 labels = clusterer.fit_predict(features)
                 
             elif method == "DBSCAN":
@@ -197,6 +200,8 @@ class MoodAnalyzer:
                 # Handle noise points (label -1)
                 if -1 in labels:
                     labels = np.where(labels == -1, 0, labels + 1)
+            else:
+                labels = np.zeros(len(data))
             
             return labels
             

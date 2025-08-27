@@ -56,8 +56,14 @@ class Visualizer:
             # Create hover text
             hover_text = []
             for _, row in cluster_data.iterrows():
+                # Handle timestamp formatting safely
+                try:
+                    date_str = row['timestamp'].strftime('%Y-%m-%d %H:%M') if pd.notna(row['timestamp']) else 'N/A'
+                except:
+                    date_str = str(row.get('timestamp', 'N/A'))
+                
                 text = f"""
-                Date: {row['timestamp'].strftime('%Y-%m-%d %H:%M')}
+                Date: {date_str}
                 Energy: {row.get('energy_level', 'N/A')}
                 Calm: {row.get('calm_level', 'N/A')}
                 Mood: {row.get('mood_rating', 'N/A')}
@@ -72,7 +78,7 @@ class Visualizer:
                 y=cluster_data[y_col],
                 mode='markers',
                 marker=dict(
-                    size=cluster_data.get('mood_rating', [50] * len(cluster_data)) / 5 + 8,
+                    size=[row.get('mood_rating', 50) / 5 + 8 for _, row in cluster_data.iterrows()],
                     color=self.cluster_colors[i % len(self.cluster_colors)],
                     opacity=0.7,
                     line=dict(width=2, color='white')
@@ -338,7 +344,8 @@ class Visualizer:
             text=corr_matrix.values.round(2),
             texttemplate='%{text}',
             textfont={"size": 12},
-            hoverongaps=False
+            hoverongaps=False,
+            showscale=True
         ))
         
         fig.update_layout(

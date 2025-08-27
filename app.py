@@ -68,7 +68,7 @@ def main():
                     sentiment_label = "Positive 🙂"
                     sentiment_color = "🟢"
                 elif avg_sentiment >= -0.1:
-                    sentiment_label = "Balanced ✨"
+                    sentiment_label = "Balanced"
                     sentiment_color = "💙"
                 elif avg_sentiment >= -0.5:
                     sentiment_label = "Negative 😔"
@@ -154,7 +154,7 @@ def show_mood_logging():
                 sentiment_display = "Positive 🙂"
                 sentiment_color = "🟢"
             elif sentiment_score >= -0.1:
-                sentiment_display = "Balanced ✨"
+                sentiment_display = "Balanced"
                 sentiment_color = "💙"
             elif sentiment_score >= -0.5:
                 sentiment_display = "Negative 😔"

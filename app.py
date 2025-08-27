@@ -68,8 +68,8 @@ def main():
                     sentiment_label = "Positive 🙂"
                     sentiment_color = "🟢"
                 elif avg_sentiment >= -0.1:
-                    sentiment_label = "Neutral 😐"
-                    sentiment_color = "🟡"
+                    sentiment_label = "Balanced ⚖️"
+                    sentiment_color = "🔵"
                 elif avg_sentiment >= -0.5:
                     sentiment_label = "Negative 😔"
                     sentiment_color = "🔴"
@@ -85,7 +85,7 @@ def main():
                     This is based on the text you write in your journal entries:
                     - **+1.0 to +0.5**: Very positive mood
                     - **+0.5 to +0.1**: Positive mood  
-                    - **+0.1 to -0.1**: Neutral mood
+                    - **+0.1 to -0.1**: Balanced mood
                     - **-0.1 to -0.5**: Negative mood
                     - **-0.5 to -1.0**: Very negative mood
                     """)
@@ -154,8 +154,8 @@ def show_mood_logging():
                 sentiment_display = "Positive 🙂"
                 sentiment_color = "🟢"
             elif sentiment_score >= -0.1:
-                sentiment_display = "Neutral 😐"
-                sentiment_color = "🟡"
+                sentiment_display = "Balanced ⚖️"
+                sentiment_color = "🔵"
             elif sentiment_score >= -0.5:
                 sentiment_display = "Negative 😔"
                 sentiment_color = "🔴"

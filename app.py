@@ -59,7 +59,36 @@ def main():
             # Check if sentiment_score column exists
             if 'sentiment_score' in data.columns:
                 avg_sentiment = data['sentiment_score'].mean()
-                st.metric("Avg Sentiment", f"{avg_sentiment:.2f}")
+                
+                # Convert to more understandable format
+                if avg_sentiment >= 0.5:
+                    sentiment_label = "Very Positive 😊"
+                    sentiment_color = "🟢"
+                elif avg_sentiment >= 0.1:
+                    sentiment_label = "Positive 🙂"
+                    sentiment_color = "🟢"
+                elif avg_sentiment >= -0.1:
+                    sentiment_label = "Neutral 😐"
+                    sentiment_color = "🟡"
+                elif avg_sentiment >= -0.5:
+                    sentiment_label = "Negative 😔"
+                    sentiment_color = "🔴"
+                else:
+                    sentiment_label = "Very Negative 😞"
+                    sentiment_color = "🔴"
+                
+                st.metric("Overall Mood", f"{sentiment_color} {sentiment_label}")
+                with st.expander("ℹ️ What does this mean?"):
+                    st.write(f"""
+                    **Your overall mood score: {avg_sentiment:.2f}**
+                    
+                    This is based on the text you write in your journal entries:
+                    - **+1.0 to +0.5**: Very positive mood
+                    - **+0.5 to +0.1**: Positive mood  
+                    - **+0.1 to -0.1**: Neutral mood
+                    - **-0.1 to -0.5**: Negative mood
+                    - **-0.5 to -1.0**: Very negative mood
+                    """)
             
             st.metric("Total Entries", total_entries)
             st.metric("Days Tracked", days_tracked)
@@ -116,14 +145,34 @@ def show_mood_logging():
             with st.spinner("Analyzing sentiment..."):
                 sentiment_result = st.session_state.mood_analyzer.analyze_sentiment(journal_text)
             
-            st.metric("Sentiment Score", f"{sentiment_result['compound']:.2f}")
-            st.metric("Emotion", sentiment_result['emotion'])
+            # Convert sentiment to understandable format
+            sentiment_score = sentiment_result['compound']
+            if sentiment_score >= 0.5:
+                sentiment_display = "Very Positive 😊"
+                sentiment_color = "🟢"
+            elif sentiment_score >= 0.1:
+                sentiment_display = "Positive 🙂"
+                sentiment_color = "🟢"
+            elif sentiment_score >= -0.1:
+                sentiment_display = "Neutral 😐"
+                sentiment_color = "🟡"
+            elif sentiment_score >= -0.5:
+                sentiment_display = "Negative 😔"
+                sentiment_color = "🔴"
+            else:
+                sentiment_display = "Very Negative 😞"
+                sentiment_color = "🔴"
             
-            # Show sentiment breakdown
-            st.write("**Sentiment Breakdown:**")
-            st.write(f"Positive: {sentiment_result['pos']:.2f}")
-            st.write(f"Neutral: {sentiment_result['neu']:.2f}")
-            st.write(f"Negative: {sentiment_result['neg']:.2f}")
+            st.metric("Detected Mood", f"{sentiment_color} {sentiment_display}")
+            st.metric("Emotion", sentiment_result['emotion'].title())
+            
+            # Show sentiment breakdown with explanation
+            with st.expander("📊 Detailed Analysis"):
+                st.write(f"**Raw Score:** {sentiment_score:.2f} (range: -1.0 to +1.0)")
+                st.write("**Component Breakdown:**")
+                st.write(f"• Positive: {sentiment_result['pos']:.0%}")
+                st.write(f"• Neutral: {sentiment_result['neu']:.0%}")
+                st.write(f"• Negative: {sentiment_result['neg']:.0%}")
         else:
             st.info("Enter journal text to see sentiment analysis")
     

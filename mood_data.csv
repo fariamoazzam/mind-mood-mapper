@@ -1,1 +1,2 @@
-timestamp,journal_text,energy_level,calm_level,mood_rating,work_stress,social_interaction,exercise,sleep_quality,weather,sentiment_score,pos,neu,neg,emotion,confidence
+timestamp,journal_text,energy_level,calm_level,mood_rating,work_stress,social_interaction,exercise,sleep_quality,weather,compound,pos,neu,neg,emotion,confidence
+2025-08-27 11:10:11.940363,I feel great working on my new project. Following the moto Day One instead of One day. ,79,33,78,True,True,True,Poor,Sunny,0.6249,0.215,0.785,0.0,positive,0.0

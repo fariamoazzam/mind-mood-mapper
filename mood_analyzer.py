@@ -69,6 +69,7 @@ class MoodAnalyzer:
         processed_text = self.preprocess_text(text)
         
         result = {
+            'sentiment_score': 0.0,
             'compound': 0.0,
             'pos': 0.0,
             'neu': 0.0,
@@ -84,6 +85,7 @@ class MoodAnalyzer:
         if self.nltk_analyzer:
             vader_scores = self.nltk_analyzer.polarity_scores(processed_text)
             result.update({
+                'sentiment_score': vader_scores['compound'],
                 'compound': vader_scores['compound'],
                 'pos': vader_scores['pos'],
                 'neu': vader_scores['neu'],
@@ -112,8 +114,10 @@ class MoodAnalyzer:
                 # Adjust compound score based on HF results
                 if result['emotion'] == 'positive':
                     result['compound'] = max(result['compound'], 0.1)
+                    result['sentiment_score'] = result['compound']
                 elif result['emotion'] == 'negative':
                     result['compound'] = min(result['compound'], -0.1)
+                    result['sentiment_score'] = result['compound']
                     
             except Exception as e:
                 st.warning(f"HuggingFace analysis failed: {e}")

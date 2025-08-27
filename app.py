@@ -55,11 +55,14 @@ def main():
         if not data.empty:
             total_entries = len(data)
             days_tracked = (data['timestamp'].max() - data['timestamp'].min()).days + 1
-            avg_sentiment = data['sentiment_score'].mean()
+            
+            # Check if sentiment_score column exists
+            if 'sentiment_score' in data.columns:
+                avg_sentiment = data['sentiment_score'].mean()
+                st.metric("Avg Sentiment", f"{avg_sentiment:.2f}")
             
             st.metric("Total Entries", total_entries)
             st.metric("Days Tracked", days_tracked)
-            st.metric("Avg Sentiment", f"{avg_sentiment:.2f}")
         else:
             st.info("No data yet. Start logging your mood!")
     

@@ -1,2 +1,6 @@
-timestamp,journal_text,energy_level,calm_level,mood_rating,work_stress,social_interaction,exercise,sleep_quality,weather,compound,pos,neu,neg,emotion,confidence
-2025-08-27 11:10:11.940363,I feel great working on my new project. Following the moto Day One instead of One day. ,79,33,78,True,True,True,Poor,Sunny,0.6249,0.215,0.785,0.0,positive,0.0
+timestamp,journal_text,energy_level,calm_level,mood_rating,work_stress,social_interaction,exercise,sleep_quality,weather,compound,pos,neu,neg,emotion,confidence,sentiment_score
+2025-08-27 11:10:11.940363,I feel great working on my new project. Following the moto Day One instead of One day. ,79,33,78,True,True,True,Poor,Sunny,0.6249,0.215,0.785,0.0,positive,0.0,
+2025-08-27 11:12:45.049378,Sad since I was not able to sleep. The traffic was loud today,19,13,4,True,False,False,Poor,Sunny,-0.4767,0.0,0.78,0.22,negative,0.0,-0.4767
+2025-08-27 11:13:43.827342,Had an amazing day. Went for morning breakfast. ,96,58,73,True,True,True,Good,Cloudy,0.5859,0.352,0.648,0.0,positive,0.0,0.5859
+2025-08-27 11:14:54.081771,Got a recognition at work. Felt proud and accepted,80,15,94,False,True,True,Good,Sunny,0.6369,0.464,0.536,0.0,positive,0.0,0.6369
+2025-08-27 11:15:34.230305,Meh. No food at home and went to work sad.,43,45,54,True,False,False,Good,Sunny,-0.6808,0.0,0.515,0.485,negative,0.0,-0.6808

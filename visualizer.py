@@ -107,6 +107,8 @@ class Visualizer:
         fig = make_subplots(
             rows=2, cols=1,
             subplot_titles=('Sentiment Score Distribution', 'Emotion Categories'),
+            specs=[[{"type": "xy"}],
+                   [{"type": "domain"}]],
             vertical_spacing=0.15
         )
         
